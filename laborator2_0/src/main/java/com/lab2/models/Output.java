@@ -2,7 +2,7 @@ package com.lab2.models;
 
 public class Output {
     private Integer order;
-    private Integer size;
+    private Long size;
     private Integer connectedComponents;
     private Integer minDegree;
     private Integer maxDegree;
@@ -15,11 +15,11 @@ public class Output {
         this.order = order;
     }
 
-    public Integer getSize() {
+    public Long getSize() {
         return size;
     }
 
-    public void setSize(Integer size) {
+    public void setSize(Long size) {
         this.size = size;
     }
 

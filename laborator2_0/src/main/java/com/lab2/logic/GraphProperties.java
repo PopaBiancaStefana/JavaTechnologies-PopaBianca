@@ -2,26 +2,30 @@ package com.lab2.logic;
 
 import com.lab2.models.Input;
 import com.lab2.models.Output;
-import org.jgrapht.Graph;
-import org.jgrapht.alg.connectivity.ConnectivityInspector;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
+import org.graph4j.*;
+import org.graph4j.alg.connectivity.ConnectivityAlgorithm;
+import org.graph4j.measures.GraphMeasures;
 
 public class GraphProperties {
     Input graphInput;
-    private Graph<Integer, DefaultEdge> graph;
-
+    private Graph graph;
     public GraphProperties(Input graphInput) {
         this.graphInput = graphInput;
     }
 
     public boolean isValidDimacsFormat() {
         //perform validation
-        if (!graphInput.getDimacsGraph().startsWith("c ") && !graphInput.getDimacsGraph().startsWith("p ")) {
+
+        String inputGraph = graphInput.getDimacsGraph();
+        if (inputGraph == null){
             return false;
         }
 
-        String[] lines = graphInput.getDimacsGraph().split("\n");
+        if(!inputGraph.startsWith("p") && !inputGraph.startsWith("c")){
+            return false;
+        }
+
+        String[] lines = inputGraph.split("\n");
         boolean foundProblemLine = false;
 
         for (String line : lines) {
@@ -38,15 +42,14 @@ public class GraphProperties {
             } else if (line.startsWith("e")) {
                 if (!line.matches("e \\d+ \\d+"))
                     return false;
-            } else {
+            } else if(!line.startsWith("c")) {
                 return false;
             }
         }
         return true;
     }
 
-    private Graph<Integer, DefaultEdge> parseDimacsFiletoGraph() {
-        Graph<Integer, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
+    private Graph parseDimacsFiletoGraph() {
 
         String[] lines = graphInput.getDimacsGraph().split("\n");
         for (String line : lines) {
@@ -55,72 +58,42 @@ public class GraphProperties {
             if (line.startsWith("p")) {
                 String[] parts = line.split(" ");
                 int vertices = Integer.parseInt(parts[2]);
+                graph = GraphBuilder.numVertices(vertices).buildGraph();
 
-                // Add all vertices to the graph.
-                for (int i = 1; i <= vertices; i++) {
-                    graph.addVertex(i);
-                }
             } else if (line.startsWith("e")) {
                 // Process the edge line.
                 String[] parts = line.split(" ");
-                int source = Integer.parseInt(parts[1]);
-                int target = Integer.parseInt(parts[2]);
+                int source = Integer.parseInt(parts[1]) - 1;
+                int target = Integer.parseInt(parts[2]) - 1;
 
-                graph.addEdge(source, target);
+                graph.addEdge(source,target);
             }
         }
         return graph;
     }
 
-    private int calculateOrder() {
-        return graph.vertexSet().size();
-    }
-
-    private int calculateSize() {
-        return graph.edgeSet().size();
-    }
-
     private int calculateNrConnectedComponents() {
-        ConnectivityInspector<Integer, DefaultEdge> inspector = new ConnectivityInspector<>(graph);
-        return inspector.connectedSets().size();
+      var connect = new ConnectivityAlgorithm(graph);
+      return connect.getConnectedSets().size();
     }
-
-    private int calculateMinDegree() {
-        int minDegree = Integer.MAX_VALUE;
-        for (int vertex : graph.vertexSet()) {
-            int degree = graph.degreeOf(vertex);
-            minDegree = Math.min(minDegree, degree);
-        }
-        return minDegree;
-    }
-
-    private int calculateMaxDegree() {
-        int maxDegree = Integer.MIN_VALUE;
-        for (int vertex : graph.vertexSet()) {
-            int degree = graph.degreeOf(vertex);
-            maxDegree = Math.max(maxDegree, degree);
-        }
-        return maxDegree;
-    }
-
     public Output ProcessGraph() {
-        this.graph = parseDimacsFiletoGraph();
+        graph = parseDimacsFiletoGraph();
         Output out = new Output();
 
         if (graphInput.getSelectedProperties().contains("order")) {
-            out.setOrder(calculateOrder());
+            out.setOrder(graph.numVertices());
         }
         if (graphInput.getSelectedProperties().contains("size")) {
-            out.setSize(calculateSize());
+            out.setSize(graph.numEdges());
         }
         if (graphInput.getSelectedProperties().contains("connectedComponents")) {
             out.setConnectedComponents(calculateNrConnectedComponents());
         }
         if (graphInput.getSelectedProperties().contains("minDegree")) {
-            out.setMinDegree(calculateMinDegree());
+            out.setMinDegree(GraphMeasures.minDegree(graph));
         }
         if (graphInput.getSelectedProperties().contains("maxDegree")) {
-            out.setMaxDegree(calculateMaxDegree());
+            out.setMaxDegree(GraphMeasures.maxDegree(graph));
         }
         return out;
     }

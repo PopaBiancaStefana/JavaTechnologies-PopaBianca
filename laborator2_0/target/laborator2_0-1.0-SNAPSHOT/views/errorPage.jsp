@@ -6,12 +6,11 @@
     <title>Error</title>
 </head>
 <body>
-<h1>Error Processing Request</h1>
-
 <c:if test="${errorMessage != null}">
-    <p>${errorMessage}</p>
+    <H1>${errorMessage}</H1>
 </c:if>
 
-<a href="views/input.jsp">Go back</a>
+<a href="<c:url value='/'/>">Go back</a>
+
 </body>
 </html>

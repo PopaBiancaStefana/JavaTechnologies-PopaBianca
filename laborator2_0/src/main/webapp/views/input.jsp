@@ -1,3 +1,4 @@
+<%@ page import="java.util.Date" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -20,7 +21,7 @@
         <% } %>>
     <label for="order">Order (Number of Vertices)</label><br>
 
-
+    <%-- List of properties   --%>
     <input type="checkbox" id="size" name="property" value="size"
         <% if (userProperties != null && userProperties.contains("size")) { %>
            checked="checked"
@@ -45,7 +46,17 @@
         <% } %>>
     <label for="maxDegree">Max Degree</label><br>
 
-    <br>
+    <%--  Capthca  --%>
+    <br><br>
+    Captcha:<br>
+    <img src="image-controller?ts=<%= new Date().getTime() %>" alt="Captcha" /><br>
+    Is the graph from the image above connected?:
+    <select name="captcha">
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+    </select>
+
+    <br><br>
     <input type="submit" value="Upload and Analyze">
 </form>
 

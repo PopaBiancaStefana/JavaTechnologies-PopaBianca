@@ -24,5 +24,8 @@
 <c:if test="${not empty output.maxDegree}">
     <p><strong>Max Degree:</strong> ${output.maxDegree}</p>
 </c:if>
+
+<a href="<c:url value='/'/>">Go back</a>
+
 </body>
 </html>

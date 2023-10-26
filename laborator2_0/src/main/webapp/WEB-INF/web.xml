@@ -13,7 +13,7 @@
         </filter>
         <filter-mapping>
             <filter-name>LoggingFilter</filter-name>
-            <url-pattern>/views/input.jsp</url-pattern>
+            <url-pattern>/views/index.jsp</url-pattern>
         </filter-mapping>
         <!-- Decorator Filter -->
         <filter>
@@ -22,7 +22,7 @@
         </filter>
         <filter-mapping>
             <filter-name>DecoratorFilter</filter-name>
-            <url-pattern>/views/input.jsp</url-pattern>
+            <url-pattern>/graph-controller</url-pattern>
         </filter-mapping>
         <!-- Context parameters for the listener-->
         <context-param>

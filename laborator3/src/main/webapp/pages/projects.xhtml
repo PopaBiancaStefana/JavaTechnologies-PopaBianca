@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Facelet Title</title>
+</h:head>
+<h:body>
+    <h:outputLabel value="Available Projects" style="font-size: xx-large"/>
+<!--    Table-->
+    <h:form id="form">
+        <p:dataTable id="projectTable"
+                    value="#{projectBean.projects}" var="project"
+                     paginator="true" rows="10"
+                     selection="#{projectBean.selectedProject}"
+                     rowKey="#{projectBean.projects.projectId}">
+            <p:column style="width:20px;" headerText="ID">
+                <h:outputText value="#{project.projectId}" />
+            </p:column>
+            <p:column headerText="Name">
+                <h:outputText value="#{project.name}" />
+            </p:column>
+            <p:column headerText="Description">
+                <h:outputText value="#{project.longDescription}" />
+            </p:column>
+            <p:column headerText="Category">
+                <h:outputText value="#{project.category}" />
+            </p:column>
+            <p:column headerText="Deadline">
+                <h:outputText value="#{project.deadline}">
+                    <f:convertDateTime pattern="dd-MM-yyyy" />
+                </h:outputText>
+            </p:column>
+            <p:column>
+                <p:commandButton style="margin-right: 20px"
+                                 value="Edit" oncomplete="PF('projectDialog').show()"
+                                 action ="#{projectBean.loadProject(project)}"/>
+                <p:commandButton style="background-color: orangered;"
+                                value="Delete" action="#{projectBean.deleteProject(project)}"
+                                 update=":form:projectTable :messages" />
+            </p:column>
+        </p:dataTable>
+    </h:form>
+
+<!--    Dialog-->
+    <p:dialog widgetVar="projectDialog" modal="true" header="Project Details"
+              resizable="false">
+        <h:form id="projectForm">
+            <p:inputText id="name" value="#{projectBean.selectedProject.name}"
+                         placeholder="Name" required="true" />
+            <p:inputTextarea id="description" value="#{projectBean.selectedProject.longDescription}"
+                             placeholder="Description" required="true" />
+<!--            <p:datePicker id="deadline" value="#{projectBean.selectedProject.deadline}"-->
+<!--                          placeholder="Deadline" required="true" />-->
+            <p:inputTextarea id="category" value="#{projectBean.selectedProject.category}"
+                             placeholder="Category" required="true"/>
+            <p:commandButton value="Save" action="#{projectBean.saveProject}"
+                             oncomplete="PF('projectDialog').hide()"
+                             update=":form:projectTable" />
+        </h:form>
+    </p:dialog>
+
+    <p:commandButton value="Add Project" oncomplete="PF('projectDialog').show()"
+                     action="#{projectBean.createNewProject}" update=":form:projectTable" />
+
+    <p:messages id="messages" autoUpdate="true" closable="true" />
+
+</h:body>
+</html>

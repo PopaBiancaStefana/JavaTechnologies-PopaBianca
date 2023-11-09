@@ -27,7 +27,6 @@ public class ProjectBean implements Serializable {
         em = emf.createEntityManager();
 
         projects = em.createQuery("select p from Project p", Project.class).getResultList();
-//        em.close();
     }
 
     public Object getProjects() {
@@ -58,10 +57,10 @@ public class ProjectBean implements Serializable {
             }
             transaction.commit();
             loadProjects();
-            return "";
+            return "All good";
         } catch (Exception e) {
             e.printStackTrace();
-            return "Error deleting project: " + e.getMessage();
+            return "Error saving project: " + e.getMessage();
         }
     }
     public String deleteProject(Project project) {

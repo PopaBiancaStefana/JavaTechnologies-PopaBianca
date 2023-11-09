@@ -4,8 +4,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h:outputLabel value="Hello, world"/>
-</f:view>
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Students</title>
+</h:head>
+<h:body>
+    <h:outputText value="#{msgs['label.studentPage']}" style="font-size: xx-large"/>
+    <!--    Navigation-->
+    <h:form>
+        <p:commandButton ajax="false" style="margin-right: 20px" value="#{msgs['label.goHome']}" action="#{navigationBean.goHome()}" />
+        <p:commandButton ajax="false" style="margin-right: 20px" value="#{msgs['label.gotoProjects']}" action="#{navigationBean.goToProjects()}" />
+    </h:form>
+    <h:form>
+        <p:dataTable value="#{studentBean.students}" var="student">
+            <p:column headerText="ID">
+                <h:outputText value="#{student.studentId}" />
+            </p:column>
+            <p:column headerText="Name">
+                <h:outputText value="#{student.name}" />
+            </p:column>
+        </p:dataTable>
+    </h:form>
+</h:body>
 </html>

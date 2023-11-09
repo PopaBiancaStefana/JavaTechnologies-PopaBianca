@@ -18,4 +18,10 @@
         <param-name>jakarta.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
+
+    <welcome-file-list>
+        <welcome-file>/pages/index.xhtml</welcome-file>
+    </welcome-file-list>
+<!--    default page-->
+
 </web-app>

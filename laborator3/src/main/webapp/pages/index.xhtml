@@ -3,27 +3,29 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
-    <title>Facelet Title</title>
+    <title>Facelet</title>
 </h:head>
 <h:body>
-    <h:outputText value="#{msg.greeting}" style="font-size: xx-large"/>
+    <h:outputText value="#{msgs['label.hello']}" style="font-size: xx-large"/>
+    <br/><br/>
+    <!--    Navigation-->
     <h:form>
-        <p:dataTable value="#{projectBean.projects}" var="project">
-            <p:column headerText="ID">
-                <h:outputText value="#{project.projectId}" />
-            </p:column>
-            <p:column headerText="Name">
-                <h:outputText value="#{project.name}" />
-            </p:column>
-            <p:column headerText="Description">
-                <h:outputText value="#{project.longDescription}" />
-            </p:column>
-            <p:column headerText="Deadline">
-                <h:outputText value="#{project.deadline}" />
-            </p:column>
-        </p:dataTable>
+    <p:commandButton ajax="false" style="margin-right: 20px" value="#{msgs['label.gotoProjects']}" action="#{navigationBean.goToProjects()}" />
+    <p:commandButton ajax="false" style="margin-right: 20px" value="#{msgs['label.gotoStudents']}" action="#{navigationBean.goToStudents()}" />
     </h:form>
+    <br/><br/>
+    <!--    Internationalization-->
+    <h:panelGrid columns = "2">
+        Language :
+        <h:selectOneMenu value="#{localeBean.currentLocale}">
+            <f:selectItem itemValue="en" itemLabel="English" />
+            <f:selectItem itemValue="ro" itemLabel="Română" />
+            <f:ajax listener="#{localeBean.changeLocale(localeBean.currentLocale)}" />
+        </h:selectOneMenu>
+    </h:panelGrid>
+
 </h:body>
 </html>

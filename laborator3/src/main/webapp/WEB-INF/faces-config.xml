@@ -4,11 +4,59 @@
               xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
                                   https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd">
     <application>
+
+        <locale-config>
+            <default-locale>en</default-locale>
+            <supported-locale>ro</supported-locale>
+        </locale-config>
+
         <resource-bundle>
-            <base-name>Messages</base-name>
-            <var>msg</var>
+            <base-name>Internationalize</base-name>
+            <var>msgs</var>
         </resource-bundle>
+
     </application>
 
+    <!-- Navigation Rules -->
+    <navigation-rule>
+        <from-view-id>/pages/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>goToProjects</from-outcome>
+            <to-view-id>/pages/projects.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>goToStudents</from-outcome>
+            <to-view-id>/pages/students.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
 
+    <navigation-rule>
+        <from-view-id>/pages/projects.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>goHome</from-outcome>
+            <to-view-id>/pages/index.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>goToStudents</from-outcome>
+            <to-view-id>/pages/students.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/pages/students.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>goHome</from-outcome>
+            <to-view-id>/pages/index.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>goToProjects</from-outcome>
+            <to-view-id>/pages/projects.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

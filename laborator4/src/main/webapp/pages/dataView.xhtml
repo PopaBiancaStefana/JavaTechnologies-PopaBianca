@@ -1,0 +1,24 @@
+<ui:composition template="/templates/page.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+<ui:define name="title">Students</ui:define>
+
+<ui:define name="content">
+    <br/>
+    <h:form>
+        <p:dataTable value="#{studentBean.students}" var="student">
+            <p:column headerText="ID">
+                <h:outputText value="#{student.studentId}" />
+            </p:column>
+            <p:column headerText="Name">
+                <h:outputText value="#{student.name}" />
+            </p:column>
+        </p:dataTable>
+    </h:form>
+</ui:define>
+
+</ui:composition>

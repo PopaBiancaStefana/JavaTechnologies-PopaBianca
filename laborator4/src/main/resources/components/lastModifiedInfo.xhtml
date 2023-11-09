@@ -1,0 +1,24 @@
+<ui:component
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:cc="http://java.sun.com/jsf/composite"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <cc:interface>
+        <cc:attribute name="lastModifiedBy" required="true"/>
+        <cc:attribute name="lastModifiedOn" required="true" type="java.util.Date"/>
+    </cc:interface>
+
+    <cc:implementation>
+        <p:outputPanel styleClass="last-modified-info">
+            <p>Last modified by: <h:outputText value="#{cc.attrs.lastModifiedBy}" /></p>
+            <p>Last modified on: <h:outputText value="#{cc.attrs.lastModifiedOn}">
+                <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" timeZone="UTC"/>
+            </h:outputText></p>
+        </p:outputPanel>
+    </cc:implementation>
+</ui:component>

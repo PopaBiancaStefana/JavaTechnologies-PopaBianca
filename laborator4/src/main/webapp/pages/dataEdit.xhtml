@@ -1,0 +1,69 @@
+<ui:composition template="/templates/page.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:cc="http://java.sun.com/jsf/composite">
+
+    <ui:define name="title">Projects</ui:define>
+
+    <ui:define name="content">
+        <!--    Table-->
+        <h:form id="form">
+            <p:dataTable id="projectTable"
+                         value="#{projectBean.projects}" var="project"
+                         paginator="true" rows="10"
+                         selection="#{projectBean.selectedProject}">
+                <p:column style="width:20px;" headerText="ID">
+                    <h:outputText value="#{project.projectId}" />
+                </p:column>
+                <p:column headerText="#{msgs['label.name']}">
+                    <h:outputText value="#{project.name}" />
+                </p:column>
+                <p:column headerText="#{msgs['label.description']}">
+                    <h:outputText value="#{project.longDescription}" />
+                </p:column>
+                <p:column headerText="#{msgs['label.category']}">
+                    <h:outputText value="#{project.category}" />
+                </p:column>
+                <p:column headerText="#{msgs['label.deadline']}">
+                    <h:outputText value="#{project.deadline}">
+                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                    </h:outputText>
+                </p:column>
+                <p:column>
+                    <p:commandButton style="margin-right: 20px"
+                                     value="#{msgs['label.edit']}" oncomplete="PF('projectDialog').show()"
+                                     action ="#{projectBean.loadProject(project)}"
+                                     update=":form:projectTable"/>
+                    <p:commandButton style="background-color: orangered;"
+                                     value="#{msgs['label.delete']}" action="#{projectBean.deleteProject(project)}"
+                                     update=":form:projectTable" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <!--    Dialog-->
+        <p:dialog widgetVar="projectDialog" modal="true" header="#{msgs['label.projectDetails']}"
+                  resizable="false">
+            <h:form id="projectForm">
+                <p:inputText id="name" value="#{projectBean.selectedProject.name}"
+                             placeholder="#{msgs['label.name']}" required="true" />
+                <p:inputTextarea id="description" value="#{projectBean.selectedProject.longDescription}"
+                                 placeholder="#{msgs['label.description']}" required="true" />
+                <p:inputTextarea id="category" value="#{projectBean.selectedProject.category}"
+                                 placeholder="#{msgs['label.category']}" required="true"/>
+                <p:datePicker id="deadline" value="#{projectBean.selectedProject.deadline}"
+                              placeholder="Deadline" required="true" />
+                <p:commandButton value="#{msgs['label.save']}" action="#{projectBean.saveProject}"
+                                 oncomplete="PF('projectDialog').hide()"
+                                 update=":form:projectTable" />
+            </h:form>
+        </p:dialog>
+
+        <p:commandButton value="#{msgs['label.addProj']}" oncomplete="PF('projectDialog').show()"
+                         action="#{projectBean.createNewProject}" update=":form:projectTable" />
+    </ui:define>
+
+</ui:composition>

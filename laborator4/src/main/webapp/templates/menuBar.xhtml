@@ -7,8 +7,11 @@
    <h:form>
       <p:menubar style="background-color:aliceblue">
          <p:menuitem ajax="false" style="font-weight: bold" value="#{msgs['label.gotoProjects']}" action="#{navigationBean.goToProjects()}"/>
+         <p:spacer width="30" height="10"/>
          <p:menuitem ajax="false" style="font-weight: bold" value="#{msgs['label.gotoStudents']}" action="#{navigationBean.goToStudents()}"/>
+         <p:spacer width="30" height="10"/>
          <p:menuitem ajax="false" style="font-weight: bold" value="#{msgs['label.goHome']}" action="#{navigationBean.goHome()}"/>
+         <p:spacer width="30" height="10"/>
          <p:menuitem ajax="false" style="font-weight: bold" value="#{msgs['label.goStudentsProj']}" action="#{navigationBean.goStudentsProjects()}" />
       </p:menubar>
    </h:form>

@@ -10,7 +10,7 @@
     <ui:define name="content">
         <br/>
         <h:form id="form">
-            <p:dataTable id="studentsProjects" value="#{studentProjectsBean.studentProjects}" var="student">
+            <p:dataTable id="studentsProjects" value="#{studentProjectsBean.studentProjects}"   paginator="true" rows="5" var="student">
                 <p:column headerText="Student ID">
                     <h:outputText value="#{student.studentId}" />
                 </p:column>
@@ -21,26 +21,34 @@
                     <h:outputText value="#{student.projectId}" />
                 </p:column>
                 <p:column headerText="Project Name">
-                    <h:outputText value="#{student.projectId}" />
+                    <h:outputText value="#{studentProjectsBean.getProjectName(student)}" />
                 </p:column>
                 <p:column headerText="Order">
                     <h:outputText value="#{student.projectOrder}" />
                 </p:column>
             </p:dataTable>
         </h:form>
-        <br/><br/>
 
         <!--    Dialog-->
         <p:dialog widgetVar="projectDialog" modal="true" header="#{msgs['label.projectDetails']}"
                   resizable="false">
             <h:form id="projectForm">
-                <p:inputText id="sutdentId" value="#{studentProjectsBean.selectedStudent.studentId}"
-                             placeholder="#{msgs['label.name']}" required="true" />
-                <p:inputTextarea id="projectId" value="#{studentProjectsBean.selectedStudent.projectId}"
-                                 placeholder="#{msgs['label.description']}" required="true" />
 
-                <p:inputTextarea id="order" value="#{studentProjectsBean.selectedStudent.projectOrder}"
-                                 placeholder="#{msgs['label.category']}" required="true"/>
+                <p:selectOneMenu value="#{studentProjectsBean.selectedStudent.studentId}">
+                    <f:selectItem itemLabel="Student Name" itemValue="#{studentProjectsBean.selectedStudent.studentId}" noSelectionOption="false"/>
+                    <f:selectItems value="#{studentBean.students}" var="student" itemLabel="#{student.name}" itemValue="#{student.studentId}"/>
+                </p:selectOneMenu>
+                <p:spacer width="20" height="10"/>
+
+                <p:selectOneMenu value="#{studentProjectsBean.selectedStudent.projectId}">
+                    <f:selectItem itemLabel="Project Name" itemValue="#{studentProjectsBean.selectedStudent.projectId}" noSelectionOption="false"/>
+                    <f:selectItems value="#{projectBean.projects}" var="project" itemLabel="#{project.name}" itemValue="#{project.projectId}"/>
+                </p:selectOneMenu>
+                <p:spacer width="20" height="10"/>
+
+                <p:inputTextarea style="height: 10px;" id="order" value="#{studentProjectsBean.selectedStudent.projectOrder}"
+                                 placeholder="Order" required="true"/>
+                <p:spacer width="20" height="10"/>
 
                 <p:commandButton value="#{msgs['label.save']}" action="#{studentProjectsBean.savePreference()}"
                                  oncomplete="PF('projectDialog').hide()"
@@ -48,8 +56,11 @@
             </h:form>
         </p:dialog>
 
-        <p:commandButton value="Add Preference" oncomplete="PF('projectDialog').show()"
-                         action="#{studentProjectsBean.createNewPreference()}" update=":form:studentsProjects" />
+        <h:form>
+            <p:commandButton value="Add Preference" oncomplete="PF('projectDialog').show()"
+                             action="#{studentProjectsBean.createNewPreference()}" update=":form:studentsProjects" />
+
+        </h:form>
     </ui:define>
 
 </ui:composition>

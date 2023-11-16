@@ -2,6 +2,8 @@ package com.entities;
 
 import jakarta.persistence.*;
 
+@NamedQuery(name="getStudentsProjects", query = "SELECT sp FROM StudentProjects sp")
+@NamedQuery(name="getRowByStudentIdProjectId", query = "SELECT sp FROM StudentProjects sp WHERE sp.studentId = :sid AND sp.projectId = :pid")
 @Entity
 @Table(name = "student_projects", schema = "public", catalog = "postgres")
 @IdClass(StudentProjectsPK.class)

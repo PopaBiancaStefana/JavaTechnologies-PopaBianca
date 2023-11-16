@@ -13,7 +13,7 @@
         <h:form id="form">
             <p:dataTable id="projectTable"
                          value="#{projectBean.projects}" var="project"
-                         paginator="true" rows="10"
+                         paginator="true" rows="5"
                          selection="#{projectBean.selectedProject}">
                 <p:column style="width:20px;" headerText="ID">
                     <h:outputText value="#{project.projectId}" />
@@ -50,20 +50,28 @@
             <h:form id="projectForm">
                 <p:inputText id="name" value="#{projectBean.selectedProject.name}"
                              placeholder="#{msgs['label.name']}" required="true" />
+                <p:spacer width="20" height="10"/>
                 <p:inputTextarea id="description" value="#{projectBean.selectedProject.longDescription}"
                                  placeholder="#{msgs['label.description']}" required="true" />
+                <p:spacer width="20" height="10"/>
                 <p:inputTextarea id="category" value="#{projectBean.selectedProject.category}"
                                  placeholder="#{msgs['label.category']}" required="true"/>
+                <p:spacer width="20" height="10"/>
                 <p:datePicker id="deadline" value="#{projectBean.selectedProject.deadline}"
                               placeholder="Deadline" required="true" />
+                <p:spacer width="20" height="10"/>
                 <p:commandButton value="#{msgs['label.save']}" action="#{projectBean.saveProject}"
                                  oncomplete="PF('projectDialog').hide()"
                                  update=":form:projectTable" />
             </h:form>
         </p:dialog>
 
-        <p:commandButton value="#{msgs['label.addProj']}" oncomplete="PF('projectDialog').show()"
-                         action="#{projectBean.createNewProject}" update=":form:projectTable" />
+        <p:spacer width="20" height="20"/>
+        <h:form>
+            <p:commandButton value="#{msgs['label.addProj']}" oncomplete="PF('projectDialog').show()"
+                             action="#{projectBean.createNewProject}" update=":form:projectTable" />
+        </h:form>
+
     </ui:define>
 
 </ui:composition>

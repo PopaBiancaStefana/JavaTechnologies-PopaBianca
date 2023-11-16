@@ -4,9 +4,11 @@ package com.beans;
 import com.entities.Project;
 import com.entities.Student;
 import com.entities.StudentProjects;
+import com.repositories.StudentProjectsRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -22,9 +24,10 @@ import java.util.stream.Collectors;
 @Named
 @ViewScoped
 public class StudentProjectsBean implements Serializable {
-    @PersistenceContext(unitName = "Persistence")
-    private EntityManager em;
-    private List<StudentProjects> studentProjects;
+
+    @Inject
+    private StudentProjectsRepository repository;
+    private List studentProjects;
 
     private StudentProjects selectedStudent;
 
@@ -37,13 +40,23 @@ public class StudentProjectsBean implements Serializable {
         return studentProjects;
     }
 
+
     public Object getSelectedStudent() {
         if(selectedStudent == null)
             selectedStudent = new StudentProjects();
         return selectedStudent;
     }
+
+    public Object getStudentName(StudentProjects studentProject) {
+        return repository.getStudentNameById(studentProject.getStudentId());
+    }
+
+    public Object getProjectName(StudentProjects studentProject) {
+        return repository.getProjectName(studentProject.getProjectId());
+    }
+
     public void loadStudentsProjects(){
-        studentProjects = em.createQuery("select sp from StudentProjects sp", StudentProjects.class).getResultList();
+        studentProjects = repository.getStudentsProjects();
     }
 
     public void loadStudentProject(StudentProjects studentProject){
@@ -55,43 +68,9 @@ public class StudentProjectsBean implements Serializable {
     }
 
 
-    public Object getStudentName(StudentProjects studentProject) {
-        return em.createQuery("select s.name from Student s where s.studentId = :student", Student.class)
-                .setParameter("student", studentProject.getStudentId()).getResultList().toArray()[0];
-    }
-
-    public Object getProjectName(StudentProjects studentProject) {
-        return em.createQuery("select p.name from Project p where p.project_id = :project", Project.class)
-                .setParameter("project", studentProject.getProjectId()).getResultList().toArray()[0];
-    }
-
-    public List<Project> getstudentProjects(Student student) {
-
-        //the list of projects IDs for student
-        List<Integer> studentProjects = em.createQuery("select sp from StudentProjects sp where sp.studentId = :student", StudentProjects.class)
-                .setParameter("student", student.getStudentId()).getResultList()
-                .stream().map(StudentProjects::getProjectId).collect(Collectors.toList());
-
-        return em.createQuery("select p from Project p where p.project_id in :projects", Project.class)
-                .setParameter("projects", studentProjects).getResultList();
-    }
-
-    @Transactional
     public void savePreference() {
-        try {
-            List<StudentProjects> selected = em.createQuery("SELECT sp from StudentProjects sp WHERE sp.studentId = :sid AND sp.projectId = :pid", StudentProjects.class)
-                    .setParameter("sid", selectedStudent.getStudentId()).setParameter("pid", selectedStudent.getProjectId()).getResultList();
-            if (selected.isEmpty()) {
-                em.persist(selectedStudent);
-            } else {
-                em.merge(selectedStudent);
-            }
-            System.out.println("Save operation success.");
-            loadStudentsProjects();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Save operation failure: " + e.getMessage());
-        }
+        repository.savePreference(selectedStudent);
+        loadStudentsProjects();
     }
 
 }

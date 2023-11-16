@@ -2,6 +2,9 @@ package com.entities;
 
 import jakarta.persistence.*;
 
+
+@NamedQuery(name="getStudents", query = "SELECT s FROM Student s")
+@NamedQuery(name="getStudentNameById", query = "SELECT s.name FROM Student s WHERE s.studentId = :student")
 @Entity
 @Table(name = "students")
 public class Student {

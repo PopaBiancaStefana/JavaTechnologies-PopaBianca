@@ -26,6 +26,16 @@ public class Project {
     @Column(name = "deadline")
     private Date deadline;
 
+    public Project() {
+
+    }
+    public Project(String name, String category, String long_description, Date deadline) {
+        this.name = name;
+        this.category = category;
+        this.long_description = long_description;
+        this.deadline = deadline;
+    }
+
     public int getProjectId() {
         return project_id;
     }

@@ -17,6 +17,7 @@
 <!--            <property name="jakarta.persistence.jdbc.password" value="postgres"/>-->
         </properties>
     </persistence-unit>
+
 </persistence>
 
 

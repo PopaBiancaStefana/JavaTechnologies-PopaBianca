@@ -4,16 +4,16 @@ import com.entities.Preference;
 import com.entities.User;
 import com.repositories.PreferenceRepository;
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.view.ViewScoped;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
 @Named
-@ViewScoped
-public class PreferenceBean {
+@SessionScoped
+public class PreferenceBean implements Serializable {
     @Inject
     private PreferenceRepository preferenceRepository;
 
@@ -41,6 +41,7 @@ public class PreferenceBean {
     }
 
     public void savePreference() {
+        currentPreference.setRegistrationNumber(UUID.randomUUID());
         preferenceRepository.savePreference(currentPreference);
         currentPreference = new Preference();
         loadPreferencesBasedOnRole();
@@ -55,4 +56,19 @@ public class PreferenceBean {
         this.currentPreference = preferenceRepository.getPreferenceById(registrationNumber);
     }
 
+    public void setPreferences(List preferences) {
+        this.preferences = preferences;
+    }
+
+    public void setCurrentPreference(Preference currentPreference) {
+        this.currentPreference = currentPreference;
+    }
+
+    public List getPreferences() {
+        return preferences;
+    }
+
+    public Preference getCurrentPreference() {
+        return currentPreference;
+    }
 }

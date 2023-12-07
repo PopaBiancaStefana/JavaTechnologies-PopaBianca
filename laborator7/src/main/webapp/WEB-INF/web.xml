@@ -16,4 +16,8 @@
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
 
+    <!-- Define the welcome file -->
+    <welcome-file-list>
+        <welcome-file>faces/pages/login.xhtml</welcome-file>
+    </welcome-file-list>
 </web-app>

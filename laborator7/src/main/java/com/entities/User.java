@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @NamedQuery(name="getUsers", query = "SELECT u FROM User u")
-@NamedQuery(name="getUserByNameAndPassword", query = "SELECT u FROM User u WHERE u.username = :username AND u.passwordHash = :password")
+@NamedQuery(name="getUserByName", query = "SELECT u FROM User u WHERE u.username = :username")
 @Entity
 @Table(name = "Users")
 public class User {

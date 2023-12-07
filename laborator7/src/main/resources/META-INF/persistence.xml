@@ -9,24 +9,5 @@
     <class>com.entities.Preference</class>
     <class>com.entities.User</class>
 
-<!--    <properties>-->
-<!--      <property name="toplink.jdbc.url" value="jdbc:postgresql://localhost:5432/timestamp"/>-->
-<!--      <property name="toplink.jdbc.driver" value="org.postgresql.Driver"/>-->
-<!--      <property name="toplink.jdbc.user" value="postgres"/>-->
-<!--      <property name="toplink.jdbc.password" value="postgres"/>-->
-<!--      <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/timestamp"/>-->
-<!--      <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>-->
-<!--      <property name="hibernate.connection.username" value="postgres"/>-->
-<!--      <property name="hibernate.connection.password" value="postgres"/>-->
-<!--      <property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost:5432/timestamp"/>-->
-<!--      <property name="openjpa.ConnectionDriverName" value="org.postgresql.Driver"/>-->
-<!--      <property name="openjpa.ConnectionUserName" value="postgres"/>-->
-<!--      <property name="openjpa.ConnectionPassword" value="postgres"/>-->
-<!--      <property name="eclipselink.jdbc.url" value="jdbc:postgresql://localhost:5432/timestamp"/>-->
-<!--      <property name="eclipselink.jdbc.driver" value="org.postgresql.Driver"/>-->
-<!--      <property name="eclipselink.jdbc.user" value="postgres"/>-->
-<!--      <property name="eclipselink.jdbc.password" value="postgres"/>-->
-<!--    </properties>-->
-
   </persistence-unit>
 </persistence>

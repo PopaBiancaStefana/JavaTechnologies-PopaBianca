@@ -2,7 +2,7 @@
 
 -- DROP TABLE IF EXISTS public."Users";
 
-CREATE TABLE IF NOT EXISTS public."Users"
+CREATE TABLE IF NOT EXISTS public.users
 (
     user_id integer NOT NULL DEFAULT nextval('"Users_userId_seq"'::regclass),
     username "char"[] NOT NULL,
@@ -11,11 +11,11 @@ CREATE TABLE IF NOT EXISTS public."Users"
     CONSTRAINT "Users_pkey" PRIMARY KEY (user_id)
     )
 
--- Table: public.Preferences
+-- Table: public.preferences
 
--- DROP TABLE IF EXISTS public."Preferences";
+-- DROP TABLE IF EXISTS public.preferences;
 
-CREATE TABLE IF NOT EXISTS public."Preferences"
+CREATE TABLE IF NOT EXISTS public.preferences
 (
     registration_number uuid NOT NULL,
     teacher_id integer NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS public."Preferences"
     "timestamp" timestamp without time zone,
     CONSTRAINT "Preferences_pkey" PRIMARY KEY (registration_number),
     CONSTRAINT "Fk_preferences_teacher" FOREIGN KEY (teacher_id)
-    REFERENCES public."Users" (user_id) MATCH SIMPLE
+    REFERENCES public.users (user_id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     )

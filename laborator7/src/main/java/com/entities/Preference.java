@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @NamedQuery(name="getPreferences", query = "SELECT p FROM Preference p")
-@NamedQuery(name="getPreferencesByTeacher", query = "SELECT p FROM Preference p WHERE p.teacher = : teacher")
+@NamedQuery(name="getPreferencesByTeacher", query = "SELECT p FROM Preference p WHERE p.teacher = :teacher")
 @Entity
 @Table(name = "Preferences")
 public class Preference {

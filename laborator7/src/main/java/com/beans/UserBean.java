@@ -3,16 +3,17 @@ package com.beans;
 import com.entities.User;
 import com.repositories.UserRepository;
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.view.ViewScoped;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import utilities.PasswordEncrypter;
 
 import java.io.Serializable;
+import java.sql.SQLOutput;
 import java.util.List;
 
 @Named
-@ViewScoped
+@SessionScoped
 public class UserBean implements Serializable {
     @Inject
     private UserRepository userRepository;
@@ -26,6 +27,8 @@ public class UserBean implements Serializable {
     @PostConstruct
     public void init() {
         loadUsers();
+        currentUser = new User();
+        encrypter = new PasswordEncrypter();
     }
 
     public void loadUsers(){ users = userRepository.getAllUsers();}
@@ -33,47 +36,48 @@ public class UserBean implements Serializable {
     public String login() {
         currentUser = (User)userRepository.authenticate(username, password);
         if (currentUser != null) {
-            return "home"; // Navigate to the Preferences Page
+            System.out.println("Logged in.");
+            return "index?faces-redirect=true"; // Redirect to homepage
+        } else {
+            System.out.println("Couldn't log in.");
         }
         return "login"; // Authentication failed, show error message
     }
 
-    public void logout() {
+    public String logout() {
         currentUser = null;
+        return "login?faces-redirect=true";
     }
 
-    public void saveUser() {
+    public String register() {
         if (currentUser != null) {
-            String hashedPassword = encrypter.hashPassword(currentUser.getPasswordHash());
+            currentUser.setUsername(username);
+            String hashedPassword = encrypter.hashPassword(password);
             currentUser.setPasswordHash(hashedPassword);
             currentUser.setRole("teacher");
             userRepository.saveUser(currentUser);
         }
+        return "login?faces-redirect=true";
     }
-
-    public List getUsers() {
-        return users;
-    }
-
 
     public User getCurrentUser() {
         return currentUser;
-    }
-
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setPassword(String password) {

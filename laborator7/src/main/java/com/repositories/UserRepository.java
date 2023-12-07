@@ -5,7 +5,6 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import utilities.PasswordEncrypter;
-
 import java.util.List;
 
 @Stateless
@@ -14,15 +13,18 @@ public class UserRepository
     @PersistenceContext(unitName = "Persistence")
     private EntityManager em;
 
-    private PasswordEncrypter passwordEncrypter;
+    private final PasswordEncrypter passwordEncrypter = new PasswordEncrypter();
 
     public Object authenticate(String username, String password) {
-        User user = (User)em.createNamedQuery("getUserByNameAndPassword")
+        List users = em.createNamedQuery("getUserByName")
                 .setParameter("username", username)
-                .setParameter("password", password)
-                .getResultList().toArray()[0];
-        if (passwordEncrypter.checkPassword(password, user.getPasswordHash())) {
-            return user;
+                .getResultList();
+        if (!users.isEmpty()){
+            User user = (User)users.get(0);
+            if (passwordEncrypter.checkPassword(password, user.getPasswordHash())){
+                System.out.println("Password correct");
+                return user;
+            }
         }
         return null;
     }
@@ -34,9 +36,12 @@ public class UserRepository
     public void saveUser(User user) {
         if ( user.getUserId() == null|| em.find(User.class, user.getUserId()) == null) {
             em.persist(user);
+            System.out.println("User " + user.getUsername() + " saved");
         } else {
             em.merge(user);
+            System.out.println("User " + user.getUsername() + " created");
         }
+
     }
 
     public void deleteUser(int userId) {

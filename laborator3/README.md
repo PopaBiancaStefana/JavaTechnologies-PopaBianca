@@ -5,7 +5,7 @@
   - PrimeFaces framework
     
 # Homework :
-  - Datatable fro managing projects and students: create/edit with modal dialog
+  - Datatable for managing projects and students: create/edit with modal dialog
   - Web-flow with navigation-rules
   - Internationalization
 

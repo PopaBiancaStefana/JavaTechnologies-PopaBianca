@@ -4,52 +4,54 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
+@NamedQuery(name="getUsers", query = "SELECT u FROM User u")
+@NamedQuery(name="getUserByNameAndPassword", query = "SELECT u FROM User u WHERE u.username = :username AND u.passwordHash = :password")
 @Entity
 @Table(name = "Users")
 public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "user_id")
-    private int userId;
+    private Integer userId;
     @Basic
     @Column(name = "username")
-    private Object username;
+    private String username;
     @Basic
     @Column(name = "role")
-    private Object role;
+    private String role;
     @Basic
     @Column(name = "password_hash")
-    private Object passwordHash;
+    private String passwordHash;
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public Object getUsername() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(Object username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public Object getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Object role) {
+    public void setRole(String role) {
         this.role = role;
     }
 
-    public Object getPasswordHash() {
+    public String getPasswordHash() {
         return passwordHash;
     }
 
-    public void setPasswordHash(Object passwordHash) {
+    public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }
 
@@ -60,7 +62,7 @@ public class User {
 
         User users = (User) o;
 
-        if (userId != users.userId) return false;
+        if (!Objects.equals(userId, users.userId)) return false;
         if (!Objects.equals(username, users.username)) return false;
         if (!Objects.equals(role, users.role)) return false;
         if (!Objects.equals(passwordHash, users.passwordHash)) return false;

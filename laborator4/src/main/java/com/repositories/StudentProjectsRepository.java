@@ -1,15 +1,13 @@
 package com.repositories;
 
-
 import com.entities.StudentProjects;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 
 import java.util.List;
 
-@ApplicationScoped
+@Stateless
 public class StudentProjectsRepository {
 
     @PersistenceContext(unitName = "Persistence")
@@ -29,7 +27,6 @@ public class StudentProjectsRepository {
         return  em.createNamedQuery("getStudentsProjects").getResultList();
     }
 
-    @Transactional
     public void savePreference(StudentProjects student) {
         try {
             List selected = em.createNamedQuery("getRowByStudentIdProjectId")
@@ -39,7 +36,6 @@ public class StudentProjectsRepository {
             } else {
                 em.merge(student);
             }
-            System.out.println("Save operation success.");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Save operation failure: " + e.getMessage());

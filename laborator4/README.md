@@ -20,3 +20,6 @@
   - created a complete test unit for the CRUD operations for one entity class with JUnit
 
 
+# Laboratory 6 updates:
+- implemented the repository classes as Enterprise Java Beans
+

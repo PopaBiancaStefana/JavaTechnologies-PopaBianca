@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @NamedQuery(name="getProjects", query = "SELECT p FROM Project p")
-@NamedQuery(name="saveProjects", query = "SELECT p FROM Project p WHERE p.project_id = :id")
+@NamedQuery(name="getProjectById", query = "SELECT p FROM Project p WHERE p.project_id = :id")
 @NamedQuery(name="getProjectNameById", query = "SELECT p.name FROM Project p WHERE p.project_id = :project")
 @Entity
 @Table(name = "projects")

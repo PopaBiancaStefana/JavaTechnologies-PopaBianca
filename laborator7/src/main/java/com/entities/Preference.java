@@ -31,11 +31,11 @@ public class Preference {
         this.registrationNumber = registrationNumber;
     }
 
-    public User getTeacherId() {
+    public User getTeacher() {
         return teacher;
     }
 
-    public void setTeacherId(User teacherId) {
+    public void setTeacher(User teacherId) {
         this.teacher = teacherId;
     }
 

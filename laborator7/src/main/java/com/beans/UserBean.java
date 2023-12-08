@@ -1,6 +1,7 @@
 package com.beans;
 
 import com.entities.User;
+import com.repositories.PreferenceRepository;
 import com.repositories.UserRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
@@ -17,6 +18,8 @@ import java.util.List;
 public class UserBean implements Serializable {
     @Inject
     private UserRepository userRepository;
+    @Inject
+    private PreferenceBean preferenceBean;
 
     private PasswordEncrypter encrypter;
     private List users;
@@ -37,6 +40,7 @@ public class UserBean implements Serializable {
         currentUser = (User)userRepository.authenticate(username, password);
         if (currentUser != null) {
             System.out.println("Logged in.");
+            preferenceBean.loadPreferencesBasedOnRole();
             return "index?faces-redirect=true"; // Redirect to homepage
         } else {
             System.out.println("Couldn't log in.");
@@ -51,15 +55,20 @@ public class UserBean implements Serializable {
 
     public String register() {
         if (currentUser != null) {
+            System.out.println("Registering");
             currentUser.setUsername(username);
             String hashedPassword = encrypter.hashPassword(password);
             currentUser.setPasswordHash(hashedPassword);
             currentUser.setRole("teacher");
             userRepository.saveUser(currentUser);
+            System.out.println("Registered");
         }
         return "login?faces-redirect=true";
     }
 
+    public boolean isAdmin() {
+        return currentUser != null && "admin".equals(currentUser.getRole());
+    }
     public User getCurrentUser() {
         return currentUser;
     }

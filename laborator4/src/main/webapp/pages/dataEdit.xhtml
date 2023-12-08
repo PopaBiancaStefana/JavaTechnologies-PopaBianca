@@ -18,20 +18,25 @@
                 <p:column style="width:20px;" headerText="ID">
                     <h:outputText value="#{project.projectId}" />
                 </p:column>
+
                 <p:column headerText="#{msgs['label.name']}">
                     <h:outputText value="#{project.name}" />
                 </p:column>
+
                 <p:column headerText="#{msgs['label.description']}">
                     <h:outputText value="#{project.longDescription}" />
                 </p:column>
+
                 <p:column headerText="#{msgs['label.category']}">
                     <h:outputText value="#{project.category}" />
                 </p:column>
+
                 <p:column headerText="#{msgs['label.deadline']}">
                     <h:outputText value="#{project.deadline}">
                         <f:convertDateTime pattern="dd-MM-yyyy" />
                     </h:outputText>
                 </p:column>
+
                 <p:column>
                     <p:commandButton style="margin-right: 20px"
                                      value="#{msgs['label.edit']}" oncomplete="PF('projectDialog').show()"

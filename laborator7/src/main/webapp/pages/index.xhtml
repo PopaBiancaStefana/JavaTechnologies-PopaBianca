@@ -10,21 +10,56 @@
     <title>Home Page</title>
 </h:head>
 <h:body>
-    <h:form>
-        <p:dataTable var="preference" value="#{preferenceBean.preferences}">
+    <h1> Hello, #{userBean.currentUser.role} : #{userBean.currentUser.username}</h1>
+    <h:form id="form">
+        <p:dataTable
+                id="prefTable"
+                var="preference"
+                value="#{preferenceBean.preferences}"
+                paginator="true" rows="5"
+                selection="#{preferenceBean.currentPreference}">
+
             <p:column headerText="Registration Number">
-                #{preference.registrationNumber}
+                <h:outputText value="#{preference.registrationNumber}" />
             </p:column>
+
+            <p:column headerText="Teacher" rendered="#{userBean.admin}">
+                <h:outputText value="#{preference.teacher.username}" />
+            </p:column>
+
             <p:column headerText="Content">
-                #{preference.content}
+            <h:outputText value="#{preference.content}" />
             </p:column>
+
             <p:column headerText="Timestamp">
-                #{preference.timestamp}
+            <h:outputText value="#{preference.timestamp}" />
             </p:column>
-            <!-- Additional columns as needed -->
+
         </p:dataTable>
 
         <p:commandButton value="Logout" action="#{userBean.logout}" />
+    </h:form>
+
+    <p:dialog widgetVar="prefDialog" modal="true" header="Preference Details" resizable="false">
+        <h:form id="prefForm">
+            <p:inputText id="pref" value="#{preferenceBean.currentPreference.content}"
+                         placeholder="Your Preference Here" required="true" />
+            <p:spacer width="20" height="10"/>
+            <p:commandButton value="Save" action="#{preferenceBean.savePreference}"
+                             oncomplete="PF('prefDialog').hide()"
+                             update=":form:prefTable"
+                             disabled="#{!preferenceBean.isWithinSubmissionTimeFrame()}"/>
+        </h:form>
+    </p:dialog>
+
+    <p:spacer width="20" height="10"/>
+    <h2> Submission Time Frame: #{preferenceBean.submissionStart} -
+        #{preferenceBean.submissionEnd} </h2>
+
+    <p:spacer width="20" height="20"/>
+    <h:form>
+        <p:commandButton value="Add Preference" oncomplete="PF('prefDialog').show()"
+                         update=":form:prefTable" />
     </h:form>
 </h:body>
 </html>

@@ -30,7 +30,9 @@ public class PreferenceRepository {
     }
 
     public List getTeacherPreferences(User user){
-        return em.createNamedQuery("getPreferencesByTeacher").getResultList();
+        return em.createNamedQuery("getPreferencesByTeacher")
+                .setParameter("teacher", user)
+                .getResultList();
     }
 
     public List getAllPreferences(){

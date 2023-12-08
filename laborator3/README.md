@@ -1,7 +1,7 @@
 # Laboratory 3 - JSF Project for managing Students and their Projects
 
 # Compulsory :
-  - PostgreSQL database to store and retreive data with students and projects tables
+  - PostgresSQL database to store and retrieve data with students and projects tables
   - PrimeFaces framework
     
 # Homework :

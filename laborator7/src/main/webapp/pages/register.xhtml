@@ -13,13 +13,20 @@
    <h:form>
       <p:panel header="Register">
          <h:panelGrid columns="2">
+
             <h:outputLabel for="username" value="Username:" />
-            <p:inputText id="username" value="#{userBean.username}" required="true" />
+            <p:inputText id="username" value="#{userBean.username}" required="true" >
+               <f:validateLength minimum="1" maximum="100" />
+            </p:inputText>
+            <p:message for="username" />
 
             <h:outputLabel for="password" value="Password:" />
-            <p:password id="password" value="#{userBean.password}" required="true" />
+            <p:password id="password" value="#{userBean.password}" required="true" >
+               <f:validateLength minimum="8" />
+            </p:password>
+            <p:message for="password" />
 
-            <p:commandButton value="Register" action="#{userBean.register}" />
+            <p:commandButton value="Register" action="#{userBean.register}" update="@form"/>
 
             <h:panelGroup>
                <h:outputText value="Already have an account? " />

@@ -9,6 +9,13 @@
 - JPA-only annotations for mappings
 - Named queries
 - PrimeFaces framework
+- Contexts and Dependency Injection:
+  - ***@Inject***: for the management of application's beans
+  - ***@Produces***: decoupling the components using producer method - to generate registration numbers
+  - ***@Interceptor***: decoupling orthogonal concerns - logging for different methods 
+  - ***@Decorator***: decoupling business concerns - verifying if the submissions are within the timeframe
+  - ***@Observes***: event-based communication - UserBean emits an event after login, PreferenceBean observers and loads preferences
+  - data validation, using Bean Validation annotations
 
 ## Configuration
 - Payara Server version 6.2023.9

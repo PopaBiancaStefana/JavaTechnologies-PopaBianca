@@ -4,7 +4,7 @@ import com.entities.User;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import utilities.PasswordEncrypter;
+import com.utilities.PasswordEncrypter;
 import java.util.List;
 
 @Stateless

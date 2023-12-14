@@ -45,7 +45,7 @@
             <p:inputText id="pref" value="#{preferenceBean.currentPreference.content}"
                          placeholder="Your Preference Here" required="true" />
             <p:spacer width="20" height="10"/>
-            <p:commandButton value="Save" action="#{preferenceBean.savePreference}"
+            <p:commandButton value="Save" action="#{preferenceBean.savePreference(userBean.currentUser)}"
                              oncomplete="PF('prefDialog').hide()"
                              update=":form:prefTable"
                              disabled="#{!preferenceBean.isWithinSubmissionTimeFrame()}"/>
@@ -53,8 +53,8 @@
     </p:dialog>
 
     <p:spacer width="20" height="10"/>
-    <h2> Submission Time Frame: #{preferenceBean.submissionStart} -
-        #{preferenceBean.submissionEnd} </h2>
+    <h2> Submission Time Frame: #{preferenceBean.getSubmissionStart()} -
+        #{preferenceBean.getSubmissionEnd()} </h2>
 
     <p:spacer width="20" height="20"/>
     <h:form>

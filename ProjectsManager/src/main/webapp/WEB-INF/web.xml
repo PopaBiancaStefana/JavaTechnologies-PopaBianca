@@ -20,7 +20,7 @@
     </context-param>
 
     <welcome-file-list>
-        <welcome-file>/pages/index.xhtml</welcome-file>
+        <welcome-file>faces/pages/index.xhtml</welcome-file>
     </welcome-file-list>
 <!--    default page-->
 

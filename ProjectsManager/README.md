@@ -7,7 +7,7 @@
 - Web-flow with navigation-rules 
 - Internationalization
 
-## Laboratory 4 and 5 updates:
+## Updates:
   - Switched to Payara server
   - DatSource (configured a connection pool and a JDBC resource using Payara Server)
   - Used Templates:
@@ -22,9 +22,7 @@
   - Used named queries using JPA-Q
   - Implemented the Repository classes
   - Created a complete test unit for the CRUD operations for one entity class with JUnit
-
-## Laboratory 6 updates:
-- Implemented the repository classes as Enterprise Java Beans
+  - Implemented the repository classes as Enterprise Java Beans
 
 
 # Configuration

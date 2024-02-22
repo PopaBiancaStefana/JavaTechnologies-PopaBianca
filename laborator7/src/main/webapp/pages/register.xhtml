@@ -15,12 +15,15 @@
          <h:panelGrid columns="2">
 
             <h:outputLabel for="username" value="Username:" />
+            <br/>
             <p:inputText id="username" value="#{userBean.username}" required="true" >
                <f:validateLength minimum="1" maximum="100" />
             </p:inputText>
             <p:message for="username" />
 
+
             <h:outputLabel for="password" value="Password:" />
+            <br/>
             <p:password id="password" value="#{userBean.password}" required="true" >
                <f:validateLength minimum="8" />
             </p:password>
